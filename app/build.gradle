@@ -145,12 +145,4 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    //下载相关
-//    implementation 'com.liulishuo.filedownloader:library:1.7.7'
-
-//    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-//    implementation 'com.squareup.okio:okio:1.14.0'
-//    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 }
