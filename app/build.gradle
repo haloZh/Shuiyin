@@ -1,0 +1,156 @@
+plugins {
+    id 'com.android.application'
+    id 'com.chaquo.python'
+}
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId "com.haopeng.shuiyin"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        python {
+            pip {
+                // A pip requirement specifier, with or without a version number:
+                install "requests==2.24.0"
+            }
+        }
+
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+        }
+
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            ndk {
+                abiFilters ""
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    ndkVersion '22.0.7026061'
+
+    flavorDimensions "version"
+    productFlavors {
+        demo {
+            // Assigns this product flavor to the "version" flavor dimension.
+            // If you are using only one dimension, this property is optional,
+            // and the plugin automatically assigns all the module's flavors to
+            // that dimension.
+            dimension "version"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "-demo"
+        }
+    }
+
+    //签名
+    signingConfigs {
+        release {
+            storeFile file("./key/Certificate")      //签名文件
+            storePassword KEYSTORE_PASSWORD
+            keyAlias "x1_certificate"
+            keyPassword KEY_PASSWORD  //签名密码
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('release.apk')) {
+                def fileName = "shuiyin_${releaseTime()}.apk"
+                output.outputFileName = new File(fileName)
+            }
+        }
+    }
+
+    //声明此发布构建在签名之前需要运行proguard
+    //代码混淆--集成了Proguard，配置文件proguard.cfg
+    buildTypes {
+        def JC_APPKEY = "\"79e399a0a9f1356a1d334096\""
+        debug {
+            zipAlignEnabled false
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            signingConfig signingConfigs.release
+            buildConfigField 'String', "JC_APPKEY", JC_APPKEY
+        }
+        release {
+            zipAlignEnabled true
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles 'proguard.cfg', 'proguard-fresco.pro', 'proguard-callsdk.pro'
+            signingConfig signingConfigs.release
+            buildConfigField 'String', "JC_APPKEY", JC_APPKEY
+        }
+
+    }
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+}
+
+static def releaseTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd', TimeZone.getTimeZone("GMT+8"))
+    return formattedDate
+}
+
+def computeVersionName(String value) {
+    return rootProject.ext.baseversion + '.' + releaseTime() + value
+}
+
+class EnvironmentValue {
+
+    String value
+
+    EnvironmentValue(String value) {
+        this.value = value
+    }
+
+    public void setValue(String value) {
+        this.value = value
+    }
+
+    public String getValue() {
+        return value
+    }
+}
+
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    //下载相关
+//    implementation 'com.liulishuo.filedownloader:library:1.7.7'
+
+//    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+//    implementation 'com.squareup.okio:okio:1.14.0'
+//    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+}

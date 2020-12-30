@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="100dp">
+
+        <Button
+            android:id="@+id/btn_prase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="粘贴" />
+
+        <EditText
+            android:id="@+id/edt_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/btn_prase"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingStart="10dp"
+            android:background="@android:drawable/edit_text"
+            android:hint="请粘贴分享链接"
+            android:maxLines="1"
+            android:lines="1"
+            android:inputType="text"
+            android:ellipsize="end" />
+
+    </RelativeLayout>
+
+    <VideoView
+        android:id="@+id/vv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_btn"
+        android:visibility="visible"
+        android:layout_marginTop="4dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/rl_url"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        >
+        <Button
+            android:id="@+id/btn_get_url"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_url"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:text="解析" />
+
+        <Button
+            android:id="@+id/btn_download"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_url"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:text="下载" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_url"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="清空" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tv_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_get_url"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp" />
+
+    <View
+        android:id="@+id/v_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/half_black"
+        />
+
+    <ProgressBar
+        android:id="@+id/pb"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:id="@+id/pb_h"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:max="100"
+        android:progress="0"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
