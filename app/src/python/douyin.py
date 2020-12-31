@@ -7,6 +7,7 @@ import datetime
 import os
 import requests
 import re
+import sys
 
 
 headers={
@@ -14,11 +15,17 @@ headers={
     'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
 }
 
+#  Matcher matcher = Patterns.WEB_URL.matcher(data);
+#     if (matcher.find()){
+#         System.out.println(matcher.group());
+#     }
 def main(msg):
-    if "抖音" in msg and "https://" in msg:
+
+    if "douyin" in msg and "https://" in msg:
         try:
             # 抖音原始url
-            url = "https://" + re.search('https://(.*?) 复制', msg).group(1)
+            url =  re.search('https://(.*?)/(.*?)/', msg).group(0)
+            # print(url)
             r = requests.get(url, headers=headers)
             # 抖音重定向后的url
             url_1 = r.url
@@ -37,13 +44,13 @@ def main(msg):
         except:
             return "视频链接错误，解析不成功，请更换链接！"
     else:
-        return "不是抖音链接，请重新输入！"
+        return "目前只支持抖音链接，请重新输入！"
 
 
 
 
 if __name__ == '__main__':
-    new_url = main("抖音 https://")
-    # new_url = main(" 父母留给孩子最重要的资产是爱，是一幅幅画面，所以这就是言传身教的积极影响。 %家庭教育  %育儿  %亲子  https://v.douyin.com/JgU3RdQ/ 复制此链接，打开抖音搜索，直接观看视频")
+    url = sys.argv[1]
+    new_url = main(url)
     print(new_url)
 

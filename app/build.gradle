@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'com.chaquo.python'
 }
 
 android {
@@ -12,24 +11,13 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
-        python {
-            pip {
-                // A pip requirement specifier, with or without a version number:
-                install "requests==2.24.0"
-            }
-        }
-
-        ndk {
-            abiFilters "armeabi-v7a"
-        }
     }
 
     buildTypes {
 
         debug {
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a","x86"
             }
         }
 
@@ -47,7 +35,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    ndkVersion '22.0.7026061'
 
     flavorDimensions "version"
     productFlavors {
@@ -147,8 +134,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    //下载相关
-//    implementation 'com.liulishuo.filedownloader:library:1.7.7'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
 //    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 //    implementation 'com.squareup.okio:okio:1.14.0'
